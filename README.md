@@ -4,11 +4,12 @@ This is based on the great work that <https://github.com/itwars> done with Ansib
 
 ## System requirements
 
-* The deployment environment must have Ansible 2.4.0+
-* Terraform installed
-* Proxmox server
+- The deployment environment must have Ansible 2.4.0+
+- Terraform installed
+- Proxmox server
 
 ## How to
+
 for updated documentation check out my [medium](https://medium.com/@ssnetanel/build-a-kubernetes-cluster-using-k3s-on-proxmox-via-ansible-and-terraform-c97c7974d4a5).
 
 ### Proxmox setup
@@ -110,7 +111,7 @@ qm template 9000
 our terraform file also creates a dynamic host file for Ansible, so we need to create the files first
 
 ```bash
-cp -R inventory/sample inventory/my-cluster
+cp -R inventory/sample inventory/aragorn
 ```
 
 Rename the file `terraform/variables.tfvars.sample` to `terraform/variables.tfvars` and update all the vars.
@@ -131,9 +132,9 @@ it should look like this now:
 
 ### Ansible setup
 
-First, update the var file in `inventory/my-cluster/group_vars/all.yml` and update the ```ansible_user``` that you're selected in the cloud-init setup. you can also choose if you wold like to install metallb and argocd. if you are installing metallb, you should also specified an ip range for metallb. 
+First, update the var file in `inventory/aragorn/group_vars/all.yml` and update the `ansible_user` that you're selected in the cloud-init setup. you can also choose if you wold like to install metallb and argocd. if you are installing metallb, you should also specified an ip range for metallb.
 
-if you are running multiple clusters in your kubeconfig file, make sure to disable ```copy_kubeconfig```.
+if you are running multiple clusters in your kubeconfig file, make sure to disable `copy_kubeconfig`.
 
 after you run the Terrafom file, your file should look like this:
 
@@ -159,20 +160,21 @@ Start provisioning of the cluster using the following command:
 cd ..
 
 # run the playbook
-ansible-playbook -i inventory/my-cluster/hosts.ini site.yml
+ansible-playbook -i inventory/aragorn/hosts.ini site.yml
 ```
 
 It can a few minutes, but once its done, you should have a k3s cluster up and running.
 
 ### Kubeconfig
 
-The ansible should already copy the file to your ~/.kube/config (if you enable the ```copy_kubeconfig``` in  ```inventory/my-cluster/group_vars/all.yml```), but if you are having issues you can scp and check the status again.
+The ansible should already copy the file to your ~/.kube/config (if you enable the `copy_kubeconfig` in `inventory/aragorn/group_vars/all.yml`), but if you are having issues you can scp and check the status again.
 
 ```bash
 scp debian@master_ip:~/.kube/config ~/.kube/config
 ```
 
 ### Argocd
+
 To get argocd initial password run the following:
 
 ```

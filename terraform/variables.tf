@@ -28,7 +28,15 @@ variable "pm_node_name" {
   default     = "pve"
 }
 
-variable "pvt_key" {}
+variable "ssh_private_key" {
+  description = "path to the local private ssh key"
+  type        = string
+}
+
+variable "ssh_user_name" {
+  description = "name of the user for ssh"
+  type        = string
+}
 
 variable "num_k3s_masters" {
   default = 1
@@ -46,7 +54,7 @@ variable "num_k3s_nodes_mem" {
   default = "4096"
 }
 
-variable "tamplate_vm_name" {}
+variable "template_vm_name" {}
 
 variable "master_ips" {
   description = "List of ip addresses for master nodes"
@@ -61,5 +69,5 @@ variable "networkrange" {
 }
 
 variable "gateway" {
-  default = "192.168.3.1"
+  default = "192.168.76.1"
 }

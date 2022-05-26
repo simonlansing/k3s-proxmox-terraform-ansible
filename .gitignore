@@ -1,7 +1,7 @@
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 terraform/.terraform.lock.hcl
-inventory/my-cluster
+inventory/aragorn
 terraform/.terraform
 TODO.md
 terraform/variables.tfvars
